@@ -5,7 +5,7 @@ class CodefreshAPI {
 
     async createPullRequest(pullRequest, imageName) {
 
-        console.log(`Create pull request ${pullRequest.number}=${pullRequest.url}`)
+        console.log(`Create pull request ${pullRequest.number}=${pullRequest.url}, image ${imageName}`)
 
         return rp({
             method: 'POST',
@@ -25,7 +25,7 @@ class CodefreshAPI {
 
     async createIssue(issue, imageName) {
 
-        console.log(`Create issue request ${issue.number}=${issue.url}`)
+        console.log(`Create issue request ${issue.number}=${issue.url}, image: ${imageName}`)
 
         return rp({
             method: 'POST',
