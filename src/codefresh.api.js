@@ -3,9 +3,9 @@ const rp = require('request-promise');
 
 class CodefreshAPI {
 
-    async createPullRequest(pullRequest, imageName) {
+    async createPullRequest(pullRequest) {
 
-        console.log(`Create pull request ${pullRequest.number}=${pullRequest.url}, image ${imageName}`)
+        console.log(`Create pull request ${pullRequest.number}=${pullRequest.url}, image ${image}`)
 
         return rp({
             method: 'POST',
@@ -23,9 +23,9 @@ class CodefreshAPI {
         });
     }
 
-    async createIssue(issue, imageName) {
+    async createIssue(issue) {
 
-        console.log(`Create issue request ${issue.number}=${issue.url}, image: ${imageName}`)
+        console.log(`Create issue request ${issue.number}=${issue.url}, image: ${image}`)
 
         return rp({
             method: 'POST',
