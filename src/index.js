@@ -14,14 +14,16 @@ async function execute() {
     console.log(`Retrieve issues ${JSON.stringify(issues)}`);
 
 
-    await Promise.all(pullRequests.map(pr => {
+    const prsResult = await Promise.all(pullRequests.map(pr => {
         return codefreshApi.createPullRequest(pr);
     }));
 
-    await Promise.all(issues.map(issue => {
+    console.log(`PR annotations store ${JSON.stringify(prsResult)}`);
+
+    const issuesResult = await Promise.all(issues.map(issue => {
         return codefreshApi.createIssue(issue);
     }));
     
-    
+    console.log(`Issues annotations store ${JSON.stringify(issuesResult)}`);
 }
 execute();
