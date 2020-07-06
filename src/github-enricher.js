@@ -1,9 +1,10 @@
 const { Octokit } = require("@octokit/rest");
 const bluebird = require('bluebird');
 const _ = require('lodash');
+const configuration = require('./configuration');
 
 const octokit = new Octokit({
-    auth: '887b2b847f7b090fa693979cfac1f2e7f241d4b9'
+    auth: configuration.githubToken
   });
 
 
