@@ -1,46 +1,66 @@
 const { host, apiToken, image } = require('./configuration');
 const rp = require('request-promise');
+const _ = require('lodash')
 
 class CodefreshAPI {
+    _handleError(e) {
+        if (_.get(e, 'error.message')) {
+            const code = _.get(e, 'error.code')
+            const statusCode = _.get(e, 'error.status')
+            const message = _.get(e, 'error.message')
+            throw new Error(`Codefresh error ${statusCode} [${code}]: ${message}`)
+        }
+
+        throw e
+    }
 
     async createPullRequest(pullRequest) {
 
-        console.log(`Create pull request ${pullRequest.number}=${pullRequest.url}, image ${image}`)
+        console.log(`Create pull request ${pullRequest.number}=${pullRequest.url}, image ${image}`);
 
-        return rp({
-            method: 'POST',
-            uri: `${host}/api/annotations`,
-            body: {
-                entityId: image,
-                entityType: 'image-prs',
-                key: `#${pullRequest.number}`,
-                value: pullRequest.url
-            },
-            headers: {
-                'Authorization': `Bearer ${apiToken}`
-            },
-            json: true
-        });
+        try {
+            return await rp({
+                method: 'POST',
+                uri: `${host}/api/annotations`,
+                body: {
+                    entityId: image,
+                    entityType: 'image-prs',
+                    key: `#${pullRequest.number}`,
+                    value: pullRequest.url
+                },
+                headers: {
+                    'Authorization': `Bearer ${apiToken}`
+                },
+                json: true
+            });
+        } catch (e) {
+            return this._handleError(e);
+        }
     }
 
     async createIssue(issue) {
 
-        console.log(`Create issue request ${issue.number}=${issue.url}, image: ${image}`)
+        console.log(`Create issue request ${issue.number}=${issue.url}, image: ${image}`);
 
-        return rp({
-            method: 'POST',
-            uri: `${host}/api/annotations`,
-            body: {
-                entityId: image,
-                entityType: 'image-issues',
-                key: `#${issue.number}`,
-                value: issue.url
-            },
-            headers: {
-                'Authorization': `Bearer ${apiToken}`
-            },
-            json: true
-        });
+        try {
+            return await rp({
+                method: 'POST',
+                uri: `${host}/api/annotations`,
+                body: {
+                    entityId: image,
+                    entityType: 'image-issues',
+                    key: `#${issue.number}`,
+                    value: issue.url
+                },
+                headers: {
+                    'Authorization': `Bearer ${apiToken}`
+                },
+                json: true
+            });
+        } catch (e) {
+            return this._handleError(e);
+        }
     }
 }
+
 module.exports = new CodefreshAPI();
