@@ -20,4 +20,7 @@ async function execute() {
 
     console.log(`PR annotations store ${JSON.stringify(prsResult)}`);
 }
-execute();
+execute()
+    .catch(e => {
+        console.error(e.message)
+    });
