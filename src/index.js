@@ -1,16 +1,12 @@
 const Promise = require('bluebird');
 
-const GithubEnricher = require('./github-enricher');
 const codefreshApi = require('./codefresh.api');
-
-const configuration = require('./configuration');
+const pullRequest = require('./pull-request');
 
 async function execute() {
 
-    console.log(`Looking for PRs from ${configuration.repo} repo and ${configuration.branch} branch`);
+    const pullRequests = await pullRequest.get();
 
-    const githubEnricher = new GithubEnricher(configuration.branch, configuration.repo, 'open');
-    const pullRequests = await githubEnricher.pullRequests();
     console.log(`Retrieve prs ${JSON.stringify(pullRequests)}`);
 
 

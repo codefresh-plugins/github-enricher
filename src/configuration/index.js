@@ -4,5 +4,6 @@ module.exports = {
     image: process.env.IMAGE_SHA,
     branch: process.env.BRANCH,
     repo: process.env.REPO,
-    githubToken: process.env.GITHUB_TOKEN
+    githubToken: process.env.GITHUB_TOKEN,
+    workingDirectory: process.env.WORKING_DIRECTORY || '/codefresh/volume'
 };
