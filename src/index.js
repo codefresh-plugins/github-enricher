@@ -1,6 +1,6 @@
 const Promise = require('bluebird');
 const chalk = require('chalk');
-
+const { image } = require('./configuration');
 const codefreshApi = require('./codefresh.api');
 const pullRequest = require('./pull-request');
 
@@ -10,14 +10,29 @@ async function execute() {
 
     console.log(chalk.green(`Retrieve prs ${JSON.stringify(pullRequests)}`));
 
+    let isFailed = false;
 
-    const prsResult = await Promise.all(pullRequests.map(pr => {
-        return codefreshApi.createPullRequest(pr);
+    await Promise.all(pullRequests.map(async pr => {
+        try {
+            const result = await codefreshApi.createPullRequest(pr);
+            if (!result) {
+                console.log(`Failed to assign pull request ${pr} to your image ${image}, please check image reference}`);
+                isFailed = true;
+            } else {
+                console.log(chalk.green(`Codefresh assign pr ${pr} to your image ${image}`));
+            }
+        } catch(e) {
+            console.log(`Failed to assign pull request ${pr} to your image ${image}, reason ${chalk.red(e.message)}`);
+            isFailed = true;
+        }
     }));
 
-    console.log(chalk.green(`PR annotations store ${JSON.stringify(prsResult)}`));
+    if(isFailed) {
+        process.exit(1);
+    }
 }
 execute()
     .catch(e => {
         console.log(chalk.red(e.message));
+        process.exit(1);
     });
