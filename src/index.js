@@ -16,13 +16,13 @@ async function execute() {
         try {
             const result = await codefreshApi.createPullRequest(pr);
             if (!result) {
-                console.log(`Failed to assign pull request ${pr} to your image ${image}, please check image reference}`);
+                console.log(`Failed to assign pull request ${pr.number} to your image ${image}, please check image reference}`);
                 isFailed = true;
             } else {
-                console.log(chalk.green(`Codefresh assign pr ${pr} to your image ${image}`));
+                console.log(chalk.green(`Codefresh assign pr ${pr.number} to your image ${image}`));
             }
         } catch(e) {
-            console.log(`Failed to assign pull request ${pr} to your image ${image}, reason ${chalk.red(e.message)}`);
+            console.log(`Failed to assign pull request ${pr.number} to your image ${image}, reason ${chalk.red(e.message)}`);
             isFailed = true;
         }
     }));
