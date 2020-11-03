@@ -16,7 +16,7 @@ async function execute() {
         try {
             const result = await codefreshApi.createPullRequest(pr);
             if (!result) {
-                console.log(`Failed to assign pull request ${pr.number} to your image ${image}, please check image reference}`);
+                console.log(`The image you are trying to enrich ${image} does not exist`);
                 isFailed = true;
             } else {
                 console.log(chalk.green(`Codefresh assign pr ${pr.number} to your image ${image}`));
