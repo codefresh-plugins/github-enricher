@@ -19,12 +19,17 @@ class File {
         const path = configuration.workingDirectory + '/event.json';
         const pr = (await this._fetchFile(path)).pull_request;
         if(pr) {
-            return [
-                {
-                    number: pr.number,
-                    url: pr.url.replace("api.github.com/repos", "github.com").replace("/pulls/", "/pull/")
+            const result = {
+                number: pr.number,
+                url: pr.url.replace("api.github.com/repos", "github.com").replace("/pulls/", "/pull/"),
+            }
+            if(pr.user) {
+                result.committer = {
+                    userName: pr.user.login,
+                    avatar: pr.user.avatar_url,
                 }
-            ]
+            }
+            return [result]
         }
         throw new Error(`PR section not found in ${path}, it can be if build was run not with PR event`);
     }

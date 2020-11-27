@@ -27,7 +27,10 @@ class CodefreshAPI {
                     entityId: image,
                     entityType: 'image-prs',
                     key: `#${pullRequest.number}`,
-                    value: pullRequest.url
+                    value: {
+                        url: pullRequest.url,
+                        committer: pullRequest.committer,
+                    }
                 },
                 headers: {
                     'Authorization': `Bearer ${apiToken}`
