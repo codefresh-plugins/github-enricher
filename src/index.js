@@ -7,12 +7,13 @@ const pullRequest = require('./pull-request');
 async function execute() {
 
     const pullRequests = await pullRequest.get();
+    const pullRequestsWithCommits = await pullRequest.enrichWithCommits(pullRequests)
 
-    console.log(chalk.green(`Retrieve prs ${JSON.stringify(pullRequests)}`));
+    console.log(chalk.green(`Retrieve prs ${JSON.stringify(pullRequestsWithCommits)}`));
 
     let isFailed = false;
 
-    await Promise.all(pullRequests.map(async pr => {
+    await Promise.all(pullRequestsWithCommits.map(async pr => {
         try {
             const result = await codefreshApi.createPullRequest(pr);
             if (!result) {
