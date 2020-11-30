@@ -13,11 +13,18 @@ class Api {
         console.log(`Looking for PRs from ${repo} repo and ${branch} branch`);
         const prs = await octokit.search.issuesAndPullRequests({ q: `head:${branch}+type:pr+repo:${repo}+is:open`  });
         return prs.data.items.map(pr => {
-            return {
+            const result = {
                 number: pr.number,
                 url: `https://github.com/${repo}/pull/${pr.number}`,
                 title: pr.title,
             }
+            if(pr.user) {
+                result.committer = {
+                    userName: pr.user.login,
+                    avatar: pr.user.avatar_url,
+                }
+            }
+            return result;
         });
     }
 

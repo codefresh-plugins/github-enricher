@@ -29,7 +29,7 @@ class CodefreshAPI {
                     key: `#${pullRequest.number}`,
                     value: {
                         url: pullRequest.url,
-                        title: pullRequest.title,
+                        committer: pullRequest.committer,
                     }
                 },
                 headers: {
