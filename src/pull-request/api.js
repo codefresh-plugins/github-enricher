@@ -15,7 +15,8 @@ class Api {
         return prs.data.items.map(pr => {
             const result = {
                 number: pr.number,
-                url: `https://github.com/${repo}/pull/${pr.number}`
+                url: `https://github.com/${repo}/pull/${pr.number}`,
+                title: pr.title,
             }
             if(pr.user) {
                 result.committer = {
