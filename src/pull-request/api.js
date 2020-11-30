@@ -44,8 +44,8 @@ class Api {
                 })
             }
         } catch (e) {
-            console.log(chalk.red(`Couldn't get commits for PR ${pullNumber} in ${repo}`))
-            console.log(chalk.red(e.toString()))
+            console.log(chalk.yellow(`Couldn't get commits for PR ${pullNumber} in ${repo}`))
+            console.log(chalk.yellow(e.toString()))
             return {
                 [pullNumber]: []
             }
