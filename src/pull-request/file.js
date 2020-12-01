@@ -21,6 +21,7 @@ class File {
         if(pr) {
             const result = {
                 number: pr.number,
+                title: pr.title,
                 url: pr.url.replace("api.github.com/repos", "github.com").replace("/pulls/", "/pull/"),
             }
             if(pr.user) {
