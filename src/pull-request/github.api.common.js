@@ -42,6 +42,3 @@ class GithubApiCommon {
 
 }
 module.exports = new GithubApiCommon();
-
-
-///repos/:owner/:repo/pulls/:pull_number/commits
