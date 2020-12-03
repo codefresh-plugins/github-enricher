@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const { Octokit } = require("@octokit/rest");
 const configuration = require('../configuration');
+const githubApiCommon = require('../pull-request/github.api.common');
 
 const octokit = new Octokit({
     auth: configuration.githubToken
@@ -12,20 +13,17 @@ class Api {
         const { branch, repo } = configuration;
         console.log(`Looking for PRs from ${repo} repo and ${branch} branch`);
         const prs = await octokit.search.issuesAndPullRequests({ q: `head:${branch}+type:pr+repo:${repo}+is:open`  });
-        return prs.data.items.map(pr => {
+        return Promise.all(prs.data.items.map(async (pr) => {
             const result = {
                 number: pr.number,
                 url: `https://github.com/${repo}/pull/${pr.number}`,
                 title: pr.title,
             }
-            if(pr.user) {
-                result.committer = {
-                    userName: pr.user.login,
-                    avatar: pr.user.avatar_url,
-                }
-            }
+
+            result.committers = await githubApiCommon.committers(pr.number);
+
             return result;
-        });
+        }));
     }
 
     async pullCommits(pullNumber) {

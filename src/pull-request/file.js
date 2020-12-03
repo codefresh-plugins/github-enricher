@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const fs = require('fs');
+const githubApiCommon = require('../pull-request/github.api.common');
 
 const configuration = require('../configuration');
 
@@ -24,12 +25,7 @@ class File {
                 title: pr.title,
                 url: pr.url.replace("api.github.com/repos", "github.com").replace("/pulls/", "/pull/"),
             }
-            if(pr.user) {
-                result.committer = {
-                    userName: pr.user.login,
-                    avatar: pr.user.avatar_url,
-                }
-            }
+            result.committers = await githubApiCommon.committers(pr.number);
             return [result]
         }
         throw new Error(`PR section not found in ${path}, it can be if build was run not with PR event`);
