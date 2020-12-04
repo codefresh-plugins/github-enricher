@@ -26,9 +26,11 @@ class GithubApiCommon {
             }
 
             commits.data.forEach((commit) => {
-                committers[commit.author.login] = {
-                    userName: commit.author.login,
-                    avatar: commit.author.avatar_url,
+                if (commit.author){
+                    committers[commit.author.login] = {
+                        userName: commit.author.login,
+                        avatar: commit.author.avatar_url,
+                    }
                 }
             })
 
