@@ -14,22 +14,5 @@ class PullRequest {
             return await api.pullRequests();
         }
     }
-
-    async enrichWithCommits(prs) {
-        const commits = await Promise.all(
-            prs.map(({number}) => api.pullCommits(number))
-        )
-
-        const map = Object.assign({}, ...commits)
-
-        const enriched = prs.map(pr => {
-            return {
-                ...pr,
-                commits: map[pr.number]
-            }
-        })
-
-        return enriched
-    }
 }
 module.exports = new PullRequest();
