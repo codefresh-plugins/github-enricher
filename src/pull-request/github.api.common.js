@@ -45,6 +45,7 @@ class GithubApiCommon {
                 }
 
                 commitsByUser[userName].push({
+                    url: commit.url,
                     userName,
                     sha: commit.sha,
                     message: commit.commit.message
