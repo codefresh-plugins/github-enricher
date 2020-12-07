@@ -20,12 +20,14 @@ class File {
         const path = configuration.workingDirectory + '/event.json';
         const pr = (await this._fetchFile(path)).pull_request;
         if(pr) {
+            const info = await githubApiCommon.extractCommitsInfo(pr.number);
+
             const result = {
+                ...info,
                 number: pr.number,
                 title: pr.title,
                 url: pr.url.replace("api.github.com/repos", "github.com").replace("/pulls/", "/pull/"),
             }
-            result.committers = await githubApiCommon.committers(pr.number);
             return [result]
         }
         throw new Error(`PR section not found in ${path}, it can be if build was run not with PR event`);
