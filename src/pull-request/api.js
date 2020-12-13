@@ -19,7 +19,7 @@ class Api {
             const result = {
                 ...info,
                 number: pr.number,
-                url: `https://github.com/${repo}/pull/${pr.number}`,
+                url: `https://${configuration.githubHost}/${repo}/pull/${pr.number}`,
                 title: pr.title,
             }
 

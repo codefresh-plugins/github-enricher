@@ -26,7 +26,7 @@ class File {
                 ...info,
                 number: pr.number,
                 title: pr.title,
-                url: pr.url.replace("api.github.com/repos", "github.com").replace("/pulls/", "/pull/"),
+                url: pr.url.replace(`api.${configuration.githubHost}/repos`, configuration.githubHost).replace("/pulls/", "/pull/"),
             }
             return [result]
         }
