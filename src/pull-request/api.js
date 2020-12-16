@@ -21,6 +21,7 @@ class Api {
                 number: pr.number,
                 url: `https://${configuration.githubHost}/${repo}/pull/${pr.number}`,
                 title: pr.title,
+                branch: _.get(pr, 'head.ref'),
             }
 
             return result;

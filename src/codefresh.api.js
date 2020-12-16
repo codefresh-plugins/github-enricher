@@ -34,6 +34,7 @@ class CodefreshAPI {
                     },
                     bigValue: {
                         firstCommitDate: pullRequest.firstCommitDate,
+                        branch: pullRequest.branch,
                         commits: pullRequest.commits,
                     }
                 },
