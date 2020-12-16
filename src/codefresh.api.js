@@ -1,4 +1,4 @@
-const { host, apiToken, image } = require('./configuration');
+const { host, apiToken, image, branch } = require('./configuration');
 const rp = require('request-promise');
 const _ = require('lodash');
 const chalk = require('chalk');
@@ -34,7 +34,7 @@ class CodefreshAPI {
                     },
                     bigValue: {
                         firstCommitDate: pullRequest.firstCommitDate,
-                        branch: pullRequest.branch,
+                        branch,
                         commits: pullRequest.commits,
                     }
                 },
