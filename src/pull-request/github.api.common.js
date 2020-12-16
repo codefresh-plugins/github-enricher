@@ -15,7 +15,7 @@ class GithubApiCommon {
         const committersMap = {};
         const commitsByUser = {}
 
-        let page = 0;
+        let page = 1;
         while (true) {
             const commits = await octokit.pulls.listCommits({
                 owner,
@@ -48,7 +48,8 @@ class GithubApiCommon {
                     url: commit.url,
                     userName,
                     sha: commit.sha,
-                    message: commit.commit.message
+                    message: commit.commit.message,
+                    date: commit.commit.author.date,
                 })
             }
 
