@@ -33,7 +33,8 @@ class CodefreshAPI {
                         committers: pullRequest.committers
                     },
                     bigValue: {
-                        commits: pullRequest.commits
+                        firstCommitDate: pullRequest.firstCommitDate,
+                        commits: pullRequest.commits,
                     }
                 },
                 headers: {
