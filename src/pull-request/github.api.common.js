@@ -13,9 +13,10 @@ class GithubApiCommon {
         const commitsByUserLimit = configuration.commitsByUserLimit
 
         const committersMap = {};
-        const commitsByUser = {}
+        const commitsByUser = {};
+        let firstCommitDate;
 
-        let page = 0;
+        let page = 1;
         while (true) {
             const commits = await octokit.pulls.listCommits({
                 owner,
@@ -26,6 +27,10 @@ class GithubApiCommon {
 
             if (commits.data.length === 0) {
                 break;
+            }
+
+            if (page === 1) {
+                firstCommitDate = commits.data[0].commit.author.date;
             }
 
             for (const commit of commits.data) {
@@ -48,7 +53,7 @@ class GithubApiCommon {
                     url: commit.url,
                     userName,
                     sha: commit.sha,
-                    message: commit.commit.message
+                    message: commit.commit.message,
                 })
             }
 
@@ -56,13 +61,14 @@ class GithubApiCommon {
         }
 
         for (const userName of Object.keys(commitsByUser)) {
-            commitsByUser[userName] = commitsByUser[userName].slice(0, commitsByUserLimit)
+            commitsByUser[userName] = _.takeRight(commitsByUser[userName], commitsByUserLimit);
         }
 
 
         return {
             committers: _.values(committersMap),
-            commits: _.flatten(_.values(commitsByUser))
+            commits: _.flatten(_.values(commitsByUser)),
+            firstCommitDate,
         };
     }
 
