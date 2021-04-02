@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const fs = require('fs');
+const _ =require('lodash');
 const githubApiCommon = require('../pull-request/github.api.common');
 
 const configuration = require('../configuration');
@@ -27,6 +28,7 @@ class File {
                 number: pr.number,
                 title: pr.title,
                 url: pr.url.replace(`api.${configuration.githubHost}/repos`, configuration.githubHost).replace("/pulls/", "/pull/"),
+                branch: _.get(pr, 'head.ref'),
             }
             //https://api.github.com/repos/codefresh-io/cf-api/pull/3650
             return [result]
