@@ -1,5 +1,4 @@
-const Promise = require('bluebird');
-
+const fileUtil = require('../../util/file.util');
 
 const configuration = require('../configuration');
 
@@ -7,17 +6,9 @@ const configuration = require('../configuration');
 
 class File {
 
-    async _fetchFile(path) {
-        try {
-            return JSON.parse(await Promise.fromCallback((cb) => fs.readFile(path, 'utf8', cb)));
-        } catch(e) {
-            throw new Error(`${path} file not found`);
-        }
-    }
-
     async pullRequests() {
         const path = configuration.workingDirectory + '/event.json';
-        const pr = (await this._fetchFile(path)).pullrequest;
+        const pr = (await fileUtil.fetchFile(path)).pullrequest;
         if(pr) {
             const result = {
                 number: pr.id,
