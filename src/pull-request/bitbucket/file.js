@@ -1,6 +1,5 @@
 const Promise = require('bluebird');
-const fs = require('fs');
-const githubApiCommon = require('../pull-request/github.api.common');
+
 
 const configuration = require('../configuration');
 
@@ -18,15 +17,12 @@ class File {
 
     async pullRequests() {
         const path = configuration.workingDirectory + '/event.json';
-        const pr = (await this._fetchFile(path)).pull_request;
+        const pr = (await this._fetchFile(path)).pullrequest;
         if(pr) {
-            const info = await githubApiCommon.extractCommitsInfo(pr.number);
-
             const result = {
-                ...info,
-                number: pr.number,
+                number: pr.id,
                 title: pr.title,
-                url: pr.url.replace(`api.${configuration.githubHost}/repos`, configuration.githubHost).replace("/pulls/", "/pull/"),
+                url: pr.links.html.href,
             }
             return [result]
         }
