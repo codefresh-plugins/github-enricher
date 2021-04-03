@@ -1,5 +1,5 @@
 {
-  "name": "cf-image-enricher",
+  "name": "github-enricher",
   "version": "0.0.2",
   "private": true,
   "scripts": {
