@@ -1,10 +1,7 @@
 const fileUtil = require('../../util/file.util');
-const _ =require('lodash');
-const githubApiCommon = require('../pull-request/github.api.common');
-
-const configuration = require('../configuration');
-
-
+const _ = require('lodash');
+const githubApiCommon = require('./github.api.common');
+const configuration = require('../../configuration');
 
 class File {
 

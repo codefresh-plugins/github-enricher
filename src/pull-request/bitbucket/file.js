@@ -1,8 +1,6 @@
 const fileUtil = require('../../util/file.util');
 
-const configuration = require('../configuration');
-
-
+const configuration = require('../../configuration');
 
 class File {
 

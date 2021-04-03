@@ -1,3 +1,4 @@
+const Promise = require('bluebird');
 const fs = require('fs');
 
 class FileUtil {

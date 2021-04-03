@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const { Octokit } = require("@octokit/rest");
-const configuration = require('../configuration');
-const githubApiCommon = require('../pull-request/github.api.common');
+const configuration = require('../../configuration');
+const githubApiCommon = require('./github.api.common');
 
 const octokit = new Octokit({
     auth: configuration.githubToken
