@@ -11,11 +11,16 @@ class Strategy {
         try {
             const path = configuration.workingDirectory + '/event.json';
             const eventPayload = await fileUtil.fetchFile(path);
-            return eventPayload.pull_request ? github : bitbucket;
+            if (eventPayload.pull_request) {
+                return github;
+            }
+            if (eventPayload.pullrequest) {
+                return bitbucket;
+            }
         } catch(e) {
             // we not support bitbucket here for now, and it shouldnt be used in correct use case
-            return github;
         }
+        return github;
     }
 
 }
