@@ -7,9 +7,8 @@ const github = require('./github');
 
 class Strategy {
 
-    async getProvider() {
+    async getProvider(path = configuration.workingDirectory + '/event.json') {
         try {
-            const path = configuration.workingDirectory + '/event.json';
             const eventPayload = await fileUtil.fetchFile(path);
             if (eventPayload.pull_request) {
                 return github;
