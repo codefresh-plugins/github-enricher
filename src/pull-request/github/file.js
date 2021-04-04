@@ -1,25 +1,13 @@
-const Promise = require('bluebird');
-const fs = require('fs');
-const _ =require('lodash');
-const githubApiCommon = require('../pull-request/github.api.common');
-
-const configuration = require('../configuration');
-
-
+const fileUtil = require('../../util/file.util');
+const _ = require('lodash');
+const githubApiCommon = require('./github.api.common');
+const configuration = require('../../configuration');
 
 class File {
 
-    async _fetchFile(path) {
-        try {
-            return JSON.parse(await Promise.fromCallback((cb) => fs.readFile(path, 'utf8', cb)));
-        } catch(e) {
-            throw new Error(`${path} file not found`);
-        }
-    }
-
     async pullRequests() {
         const path = configuration.workingDirectory + '/event.json';
-        const pr = (await this._fetchFile(path)).pull_request;
+        const pr = (await fileUtil.fetchFile(path)).pull_request;
         if(pr) {
             const info = await githubApiCommon.extractCommitsInfo(pr.number);
 

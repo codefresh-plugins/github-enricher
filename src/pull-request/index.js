@@ -1,12 +1,11 @@
-const api = require('./api');
-const file = require('./file');
-
 const chalk = require('chalk');
 
+const strategy = require('./strategy');
 
 class PullRequest {
 
     async get() {
+        const { api, file } = strategy;
         try {
             return await file.pullRequests();
         } catch(e) {
