@@ -19,3 +19,4 @@ class Strategy {
     }
 
 }
+module.exports = new Strategy();

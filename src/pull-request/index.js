@@ -5,7 +5,7 @@ const strategy = require('./strategy');
 class PullRequest {
 
     async get() {
-        const { api, file } = strategy;
+        const { api, file } = await strategy.getProvider();
         try {
             return await file.pullRequests();
         } catch(e) {
