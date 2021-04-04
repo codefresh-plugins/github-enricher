@@ -2,7 +2,7 @@ const fileUtil = require('../../util/file.util');
 
 const configuration = require('../../configuration');
 
-class File {
+class BitbucketFile {
 
     async pullRequests() {
         const path = configuration.workingDirectory + '/event.json';
@@ -19,4 +19,4 @@ class File {
     }
 
 }
-module.exports = new File();
+module.exports = new BitbucketFile();

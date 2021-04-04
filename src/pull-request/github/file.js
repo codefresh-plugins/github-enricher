@@ -3,7 +3,7 @@ const _ = require('lodash');
 const githubApiCommon = require('./github.api.common');
 const configuration = require('../../configuration');
 
-class File {
+class GithubFile {
 
     async pullRequests() {
         const path = configuration.workingDirectory + '/event.json';
@@ -24,4 +24,4 @@ class File {
     }
 
 }
-module.exports = new File();
+module.exports = new GithubFile();

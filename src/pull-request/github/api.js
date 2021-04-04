@@ -7,7 +7,7 @@ const octokit = new Octokit({
     auth: configuration.githubToken
 });
 
-class Api {
+class GithubApi {
 
     async pullRequests() {
         const { branch, repo } = configuration;
@@ -27,4 +27,4 @@ class Api {
         }));
     }
 }
-module.exports = new Api();
+module.exports = new GithubApi();
