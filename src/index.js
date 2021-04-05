@@ -26,6 +26,7 @@ async function execute() {
                 console.log(chalk.green(`Codefresh assign pr ${pr.number} to your image ${image}`));
             }
         } catch(e) {
+
             console.log(`Failed to assign pull request ${pr.number} to your image ${image}, reason ${chalk.red(e.message)}`);
             isFailed = true;
         }
