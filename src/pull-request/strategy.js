@@ -18,6 +18,7 @@ class Strategy {
             }
         } catch(e) {
             // we not support bitbucket here for now, and it shouldnt be used in correct use case
+            console.log(e);
         }
 
         if (configuration.contextType === 'git.github') {
