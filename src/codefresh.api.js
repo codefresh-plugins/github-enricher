@@ -15,6 +15,21 @@ class CodefreshAPI {
         throw e
     }
 
+    async getContext(name) {
+        try {
+            return await rp({
+                method: 'GET',
+                uri: `${host}/api/contexts/${name}?decrypt=true`,
+                headers: {
+                    'Authorization': `Bearer ${apiToken}`
+                },
+                json: true
+            });
+        } catch (e) {
+            return this._handleError(e);
+        }
+    }
+
     async createPullRequest(pullRequest) {
 
         console.log(chalk.green(`Create pull request ${pullRequest.number}=${pullRequest.url}, image ${image}`));
