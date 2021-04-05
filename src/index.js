@@ -3,21 +3,12 @@ const chalk = require('chalk');
 const { image } = require('./configuration');
 const codefreshApi = require('./codefresh.api');
 const pullRequest = require('./pull-request');
-
-const config = require('./configuration');
-
-async function prepareConfig() {
-    const context = await codefreshApi.getContext(config.contextName);
-    const type = context.spec.type;
-    const token = context.spec.data.auth.password;
-    config.contextType = type;
-    config.contextCreds = token;
-}
+const initializer = require('./initializer');
 
 async function execute() {
 
     // init data from context and put it as config
-    await prepareConfig();
+    await initializer.init();
 
     const pullRequests = await pullRequest.get();
 
