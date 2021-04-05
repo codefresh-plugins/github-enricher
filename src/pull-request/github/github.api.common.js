@@ -3,7 +3,7 @@ const _ = require('lodash');
 const configuration = require('../../configuration');
 
 const octokit = new Octokit({
-    auth: configuration.githubToken
+    auth: configuration.githubToken || configuration.contextCreds
 });
 
 class GithubApiCommon {
