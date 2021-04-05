@@ -8,5 +8,5 @@ test('should retrieve github strategy because of file', async () => {
 
 test('should retrieve github strategy because file not found', async () => {
   const provider = await strategy.getProvider(path.resolve('./unknown'));
-  expect(provider.file.__proto__.constructor.name).toBe('GithubFile');
+  expect(provider.file.__proto__.constructor.name).toBe('BitbucketFile');
 });
