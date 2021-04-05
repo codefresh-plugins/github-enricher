@@ -4,7 +4,7 @@ const configuration = require('../../configuration');
 const githubApiCommon = require('./github.api.common');
 
 const octokit = new Octokit({
-    auth: configuration.githubToken
+    auth: configuration.contextCreds
 });
 
 class GithubApi {

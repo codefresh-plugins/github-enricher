@@ -3,8 +3,12 @@ const chalk = require('chalk');
 const { image } = require('./configuration');
 const codefreshApi = require('./codefresh.api');
 const pullRequest = require('./pull-request');
+const initializer = require('./initializer');
 
 async function execute() {
+
+    // init data from context and put it as config
+    await initializer.init();
 
     const pullRequests = await pullRequest.get();
 

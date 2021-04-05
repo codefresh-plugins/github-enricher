@@ -7,5 +7,11 @@ module.exports = {
     branch: process.env.BRANCH,
     repo: process.env.REPO,
     githubToken: process.env.GITHUB_TOKEN,
-    workingDirectory: process.env.WORKING_DIRECTORY || '/codefresh/volume'
+    workingDirectory: process.env.WORKING_DIRECTORY || '/codefresh/volume',
+    contextName: process.env.GIT_PROVIDER_NAME,
+
+
+    // setup these variables during init phase
+    contextType: '',
+    contextCreds: '',
 };

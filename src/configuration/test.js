@@ -9,5 +9,10 @@ module.exports = {
     branch: process.env.BRANCH,
     repo: process.env.REPO,
     githubToken: process.env.GITHUB_TOKEN,
-    workingDirectory: process.env.WORKING_DIRECTORY ||  path.resolve(__dirname + '/../../tests')
+    workingDirectory: process.env.WORKING_DIRECTORY ||  path.resolve(__dirname + '/../../tests'),
+    contextName: process.env.GIT_PROVIDER_NAME,
+
+    // setup these variables during init phase
+    contextType: '',
+    contextCreds: '',
 };
