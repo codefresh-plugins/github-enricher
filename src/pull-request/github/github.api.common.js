@@ -2,13 +2,13 @@ const {Octokit} = require("@octokit/rest");
 const _ = require('lodash');
 const configuration = require('../../configuration');
 
-const octokit = new Octokit({
-    auth: configuration.contextCreds
-});
-
 class GithubApiCommon {
 
     async extractCommitsInfo(pullRequestId) {
+        const octokit = new Octokit({
+            auth: configuration.contextCreds
+        });
+
         const [owner, repo] = configuration.repo.split('/');
         const commitsByUserLimit = configuration.commitsByUserLimit
 

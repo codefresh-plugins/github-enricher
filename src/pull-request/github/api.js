@@ -3,13 +3,14 @@ const { Octokit } = require("@octokit/rest");
 const configuration = require('../../configuration');
 const githubApiCommon = require('./github.api.common');
 
-const octokit = new Octokit({
-    auth: configuration.contextCreds
-});
 
 class GithubApi {
 
     async pullRequests() {
+        const octokit = new Octokit({
+            auth: configuration.contextCreds
+        });
+
         const { branch, repo } = configuration;
         console.log(`Looking for PRs from ${repo} repo and ${branch} branch`);
         const prs = await octokit.search.issuesAndPullRequests({ q: `head:${branch}+type:pr+repo:${repo}+is:open`  });
