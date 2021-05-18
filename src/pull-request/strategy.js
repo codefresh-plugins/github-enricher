@@ -3,6 +3,7 @@ const configuration = require('../configuration');
 
 const bitbucket = require('./bitbucket');
 const github = require('./github');
+const gitlab = require('./gitlab');
 
 
 class Strategy {
@@ -15,6 +16,9 @@ class Strategy {
             }
             if (eventPayload.pullrequest) {
                 return bitbucket;
+            }
+            if (eventPayload.object_attributes) {
+                return gitlab;
             }
         } catch(e) {
             // we not support bitbucket here for now, and it shouldnt be used in correct use case
