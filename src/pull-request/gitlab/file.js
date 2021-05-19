@@ -7,15 +7,16 @@ class GitlabFile {
 
     async pullRequests() {
         const path = configuration.workingDirectory + '/event.json';
-        const pr = (await fileUtil.fetchFile(path)).object_attributes;
+        const payload = await fileUtil.fetchFile(path);
+        const pr = payload.object_attributes;
         if(pr) {
             const result = {
                 number: pr.id,
                 title: pr.title,
                 url: pr.url,
                 committers: [{
-                    userName: _.get(pr, 'user.username'),
-                    avatar: _.get(pr, 'user.avatar_url'),
+                    userName: _.get(payload, 'user.username'),
+                    avatar: _.get(payload, 'user.avatar_url'),
                 }],
             };
             return [result]
