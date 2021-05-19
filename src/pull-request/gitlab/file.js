@@ -14,8 +14,8 @@ class GitlabFile {
                 title: pr.title,
                 url: pr.url,
                 committers: [{
-                    userName: _.get(pr, 'assignee.username'),
-                    avatar: _.get(pr, 'assignee.avatar_url'),
+                    userName: _.get(pr, 'user.username'),
+                    avatar: _.get(pr, 'user.avatar_url'),
                 }],
             };
             return [result]
