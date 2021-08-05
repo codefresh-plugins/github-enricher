@@ -8,7 +8,8 @@ class GithubApi {
 
     async pullRequests() {
         const octokit = new Octokit({
-            auth: configuration.contextCreds
+            auth: configuration.contextCreds,
+            baseUrl: `https://${configuration.githubHost}`
         });
 
         const { branch, repo } = configuration;
