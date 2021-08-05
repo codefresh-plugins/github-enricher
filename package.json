@@ -30,3 +30,4 @@
     "collectCoverageFrom": ["src/**/*.js"]
   }
 }
+
