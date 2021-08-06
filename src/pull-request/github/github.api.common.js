@@ -6,7 +6,8 @@ class GithubApiCommon {
 
     async extractCommitsInfo(pullRequestId) {
         const octokit = new Octokit({
-            auth: configuration.contextCreds
+            auth: configuration.contextCreds,
+            baseUrl: configuration.baseUrl
         });
 
         const [owner, repo] = configuration.repo.split('/');
