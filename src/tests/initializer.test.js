@@ -8,7 +8,8 @@ jest.mock('request-promise', () => {
                 type: 'git.github',
                 data: {
                     auth: {
-                        password: 'password',
+                        apiPathPrefix: '/v3/',
+                        apiHost:'some.host'
                     }
                 }
             }
@@ -16,11 +17,9 @@ jest.mock('request-promise', () => {
     };
 });
 
-test('should retrieve context from server and put it as part of config', async () => {
+test('should correct build baseUrl', async () => {
     await initializer._prepareConfig();
 
-    expect(config.baseUrl).toBe('https://api.github.com');
-    expect(config.contextType).toBe('git.github');
-    expect(config.contextCreds).toBe('password');
+    expect(config.baseUrl).toBe('https://some.host/v3');
 
 });
