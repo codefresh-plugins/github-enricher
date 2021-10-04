@@ -16,6 +16,7 @@ class GithubApiCommon {
         const committersMap = {};
         const commitsByUser = {};
         let firstCommitDate;
+        let lastCommitDate;
 
         let page = 1;
         while (true) {
@@ -33,6 +34,8 @@ class GithubApiCommon {
             if (page === 1) {
                 firstCommitDate = commits.data[0].commit.author.date;
             }
+
+            lastCommitDate = _.last(commits.data).commit.author.date;
 
             for (const commit of commits.data) {
                 if (!commit.author) {
@@ -70,6 +73,7 @@ class GithubApiCommon {
             committers: _.values(committersMap),
             commits: _.flatten(_.values(commitsByUser)),
             firstCommitDate,
+            lastCommitDate
         };
     }
 
