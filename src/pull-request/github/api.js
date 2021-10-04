@@ -18,9 +18,9 @@ class GithubApi {
         const prs = await octokit.search.issuesAndPullRequests({ q: `head:${branch}+type:pr+repo:${repo}+is:open`  });
         return Promise.all(prs.data.items.map(async (pr) => {
             const info = await githubApiCommon.extractCommitsInfo(pr.number);
-
             const result = {
                 ...info,
+                prDate: pr.closed_at || pr.updated_at,
                 number: pr.number,
                 url: `https://${configuration.githubHost}/${repo}/pull/${pr.number}`,
                 title: pr.title,
