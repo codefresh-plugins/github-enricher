@@ -30,6 +30,41 @@ class CodefreshAPI {
         }
     }
 
+    async createPullRequestV2(pullRequest) {
+        console.log(chalk.green(`Create pull request ${pullRequest.number}=${pullRequest.url}, image ${image}`));
+        try {
+            const body = {
+                "operationName":"saveAnnotation",
+                "variables":{
+                    "annotation":{
+                        "logicEntityId": {"id": image},
+                        "entityType":"image",
+                        "key": `#${pullRequest.number}`,
+                        "type": "pr",
+                        "pullRequestValue": {
+                            url: pullRequest.url,
+                            title: pullRequest.title,
+                            committers: pullRequest.committers
+                        }
+                    }
+                },
+                "query":"mutation saveAnnotation( $annotation: AnnotationArgs!) {\n saveAnnotation(annotation: $annotation)\n}"
+            }
+            return await rp({
+                method: 'POST',
+                uri: `${host}/2.0/api/graphql`,
+                body,
+                headers: {
+                    'Authorization': `Bearer ${apiToken}`
+                },
+                json: true
+            });
+        } catch (e) {
+            return this._handleError(e);
+        }
+
+    }
+
     async createPullRequest(pullRequest) {
 
         console.log(chalk.green(`Create pull request ${pullRequest.number}=${pullRequest.url}, image ${image}`));
