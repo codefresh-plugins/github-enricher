@@ -19,7 +19,7 @@ async function execute() {
     await Promise.all(pullRequests.map(async pr => {
         if (v2) {
             try {
-                console.log(`The image you are trying to enrich ${image} does not exist`);
+                console.log(`Creating argo platform annotation for ${image}`);
                 await codefreshApi.createPullRequestV2(pr);
             } catch (e) {
                 console.log(`Failed to assign pull request ${pr.number} to your image ${image}, reason ${chalk.red(e.message)}`);
