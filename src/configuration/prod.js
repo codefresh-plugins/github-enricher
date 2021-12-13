@@ -9,6 +9,9 @@ module.exports = {
     githubToken: process.env.GITHUB_TOKEN,
     workingDirectory: process.env.WORKING_DIRECTORY || '/codefresh/volume',
     contextName: process.env.GIT_PROVIDER_NAME,
+    v2: process.env.ARGO_PLATFORM === 'true',
+    githubAPI: process.env.GITHUB_API,
+    apiPathPrefix: process.env.API_PATH_PREFIX,
 
 
     // setup these variables during init phase

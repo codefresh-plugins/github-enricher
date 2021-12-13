@@ -1,6 +1,6 @@
 const Promise = require('bluebird');
 const chalk = require('chalk');
-const { image } = require('./configuration');
+const { image, v2 } = require('./configuration');
 const codefreshApi = require('./codefresh.api');
 const pullRequest = require('./pull-request');
 const initializer = require('./initializer');
@@ -17,6 +17,16 @@ async function execute() {
     let isFailed = false;
 
     await Promise.all(pullRequests.map(async pr => {
+        if (v2) {
+            try {
+                console.log(`Creating argo platform annotation for ${image}`);
+                await codefreshApi.createPullRequestV2(pr);
+            } catch (e) {
+                console.log(`Failed to assign pull request ${pr.number} to your image ${image}, reason ${chalk.red(e.message)}`);
+            }
+            return;
+        }
+
         try {
             const result = await codefreshApi.createPullRequest(pr);
             if (!result) {
