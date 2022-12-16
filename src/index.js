@@ -25,6 +25,18 @@ async function execute() {
             } else {
                 console.log(chalk.green(`Codefresh assign pr ${pr.number} to your image ${image}`));
             }
+
+            const needReportToGitops = await codefreshApi.needReportToGitops();
+            if (needReportToGitops) {
+                const gitopsResult = await codefreshApi.createPullRequestForGitops(image, pr);
+                if (!gitopsResult) {
+                    console.log(`The image you are trying to enrich ${image} does not exist`);
+                    isFailed = true;
+                } else {
+                    console.log(chalk.green(`Codefresh assign pr ${pr.number} to your image ${image}`));
+                }
+            }
+
         } catch(e) {
             console.log(`Failed to assign pull request ${pr.number} to your image ${image}, reason ${chalk.red(e.message)}`);
             isFailed = true;
