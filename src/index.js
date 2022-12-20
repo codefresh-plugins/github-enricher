@@ -26,8 +26,8 @@ async function execute() {
                 console.log(chalk.green(`Codefresh assign pr ${pr.number} to your image ${image}`));
             }
 
-            const needReportToGitops = await codefreshApi.needReportToGitops();
-            if (needReportToGitops) {
+            const shouldReportToGitops = await codefreshApi.shouldReportToGitops();
+            if (shouldReportToGitops) {
                 const gitopsResult = await codefreshApi.createPullRequestForGitops(image, pr);
                 if (!gitopsResult) {
                     console.log(`The image you are trying to enrich ${image} does not exist`);
