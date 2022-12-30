@@ -1,4 +1,5 @@
 const { host, apiToken, image, branch } = require('./configuration');
+const { GraphQLClient, gql } = require('graphql-request');
 const rp = require('request-promise');
 const _ = require('lodash');
 const chalk = require('chalk');
@@ -27,6 +28,34 @@ class CodefreshAPI {
             });
         } catch (e) {
             return this._handleError(e);
+        }
+    }
+
+    async getUserInfo() {
+        try {
+            return await rp({
+                method: 'GET',
+                uri: `${host}/api/user`,
+                headers: {
+                    'Authorization': `Bearer ${apiToken}`
+                },
+                json: true
+            });
+        } catch (e) {
+            return this._handleError(e);
+        }
+    }
+
+    async shouldReportToGitops() {
+        try {
+            const user = await this.getUserInfo();
+            const accountName = _.get(user, 'activeAccountName');
+            const accounts = _.get(user, 'account', []);
+            const activeAccount = _.find(accounts, (account) => account.name === accountName);
+            return _.get(activeAccount, 'features.gitopsImageReporting', false);
+        } catch (e) {
+            console.log('Unable to check Git Ops image reporting');
+            return false;
         }
     }
 
@@ -63,6 +92,49 @@ class CodefreshAPI {
         } catch (e) {
             return this._handleError(e);
         }
+    }
+
+    async createPullRequestForGitops(imageName,  pullRequest) {
+        console.log(chalk.green(`creating pull request annotation ${pullRequest.number}=${pullRequest.url}`));
+        try {
+            const saveAnnotationMutation = gql`mutation saveAnnotation($annotation: AnnotationArgs!) {
+                saveAnnotation(annotation: $annotation)
+            }`;
+            const vars = {
+                annotation: {
+                    logicEntityId: { id: imageName },
+                    entityType: 'image',
+                    key: `#${pullRequest.number}`,
+                    type: 'pr',
+                    pullRequestValue: {
+                        url: pullRequest.url,
+                        title: pullRequest.title,
+                        committers: pullRequest.committers,
+                        commits: pullRequest.commits.map(c => ({
+                            url: c.url,
+                            userName: c.userName,
+                            sha: c.sha,
+                            message: c.message,
+                            commitDate: c.commitDate
+                        }))
+                    }
+                }
+            };
+            const res = await this._doGraphqlRequest(saveAnnotationMutation, vars);
+            return res;
+        } catch (e) {
+            this._handleError(e, 'Failed to create pr annotation');
+        }
+    }
+
+    async _doGraphqlRequest(query, variables) {
+        const graphQLClient = new GraphQLClient(`${host}/2.0/api/graphql`, {
+            headers: {
+                'Authorization': `Bearer ${apiToken}`
+            },
+        });
+
+        return await graphQLClient.request(query, variables);
     }
 
 }

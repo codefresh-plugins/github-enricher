@@ -1,6 +1,6 @@
 {
   "name": "github-enricher",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "private": true,
   "scripts": {
     "start": "node src/index.js",
@@ -15,6 +15,8 @@
     "lodash": "4.17.15",
     "request-promise": "4.2.5",
     "request": "2.88.2",
+    "graphql": "^16.4.0",
+    "graphql-request": "5.0.0",
     "chalk": "^4.1.0"
   },
   "devDependencies": {
