@@ -1,7 +1,13 @@
 const Promise = require('bluebird');
 const fs = require('fs');
+const configuration = require('../configuration')
 
 class FileUtil {
+
+    async getEventFile() {
+        const path = configuration.workingDirectory + '/event.json';
+        return this.fetchFile(path);
+    }
 
     async fetchFile(path) {
         try {
