@@ -1,6 +1,5 @@
 const Promise = require('bluebird');
 const fs = require('fs');
-const configuration = require('../configuration')
 
 class FileUtil {
     async fetchFile(path) {

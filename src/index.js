@@ -23,6 +23,7 @@ async function execute() {
         cfHost: config.host,
         imageName: config.image,
         gitContext: config.contextName,
+        provider: config.provider,
         ...(pullRequests && { eventFilePR: pullRequests }),
         githubApiHost: config.githubHost,
         githubToken: config.githubToken,
