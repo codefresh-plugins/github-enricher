@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const { imageEnricherGitInfo } = require('@codefresh-io/cf-docker-images');
+const { imageEnricherGitInfo } = require('@codefresh-io/cf-report-image-toolbox');
 const config = require('./configuration');
 const pullRequest = require('./pull-request');
 
