@@ -1,52 +1,38 @@
-const Promise = require('bluebird');
 const chalk = require('chalk');
-const { image } = require('./configuration');
-const codefreshApi = require('./codefresh.api');
+const { imageEnricherGitInfo } = require('@codefresh-io/cf-report-image-toolbox');
+const config = require('./configuration');
 const pullRequest = require('./pull-request');
-const initializer = require('./initializer');
+
+const PLATFORM = {
+    CLASSIC: 'CLASSIC'
+};
 
 async function execute() {
+    const pullRequests = await pullRequest.get()
+      .catch((error) => {
+          console.log(chalk.yellow(`Can't use event file, reason ${error.message}`));
+      });
 
-    // init data from context and put it as config
-    await initializer.init();
-
-    const pullRequests = await pullRequest.get();
-
-    console.log(chalk.green(`Retrieve prs ${JSON.stringify(pullRequests)}`));
-
-    let isFailed = false;
-
-    await Promise.all(pullRequests.map(async pr => {
-        try {
-            const result = await codefreshApi.createPullRequest(pr);
-            if (!result) {
-                console.log(`The image you are trying to enrich ${image} does not exist`);
-                isFailed = true;
-            } else {
-                console.log(chalk.green(`Codefresh assign pr ${pr.number} to your image ${image}`));
-            }
-
-            const shouldReportToGitops = await codefreshApi.shouldReportToGitops();
-            if (shouldReportToGitops) {
-                const gitopsResult = await codefreshApi.createPullRequestForGitops(image, pr);
-                if (!gitopsResult) {
-                    console.log(`The image you are trying to enrich ${image} does not exist`);
-                    isFailed = true;
-                } else {
-                    console.log(chalk.green(`Codefresh assign pr ${pr.number} to your image ${image}`));
-                }
-            }
-
-        } catch(e) {
-            console.log(`Failed to assign pull request ${pr.number} to your image ${image}, reason ${chalk.red(e.message)}`);
-            isFailed = true;
-        }
-    }));
-
-    if(isFailed) {
-        process.exit(1);
+    if (pullRequests) {
+        console.log(chalk.green(`Prs from event file ${JSON.stringify(pullRequests)}`));
     }
+
+    await imageEnricherGitInfo({
+        platform: PLATFORM.CLASSIC,
+        cfApiKey: config.apiToken,
+        cfHost: config.host,
+        imageName: config.image,
+        gitContext: config.contextName,
+        provider: config.provider,
+        ...(pullRequests && { eventFilePR: pullRequests }),
+        githubApiHost: config.githubHost,
+        githubToken: config.githubToken,
+        branch: config.branch,
+        repo: config.repo,
+        commitsByUserLimit: config.commitsByUserLimit,
+    });
 }
+
 execute()
     .catch(e => {
         console.log(chalk.red(e.message));

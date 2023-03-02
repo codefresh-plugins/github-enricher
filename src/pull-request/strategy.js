@@ -21,7 +21,7 @@ class Strategy {
                 return gitlab;
             }
         } catch(e) {
-            // we not support bitbucket here for now, and it shouldnt be used in correct use case
+            // we not support bitbucket here for now, and it shouldn't be used in correct use case
         }
 
         if (configuration.contextType === 'git.github') {
