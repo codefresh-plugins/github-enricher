@@ -12,4 +12,5 @@ module.exports = {
     workingDirectory: process.env.WORKING_DIRECTORY || '/codefresh/volume',
     contextName: process.env.GIT_PROVIDER_NAME,
     provider: process.env.GIT_PROVIDER || providers.GITHUB,
+    revision: process.env.REVISION,
 };

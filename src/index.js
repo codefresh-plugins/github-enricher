@@ -29,6 +29,7 @@ async function execute() {
         githubToken: config.githubToken,
         branch: config.branch,
         repo: config.repo,
+        revision: config.revision,
         commitsByUserLimit: config.commitsByUserLimit,
     });
 }
