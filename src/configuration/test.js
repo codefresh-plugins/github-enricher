@@ -14,4 +14,5 @@ module.exports = {
     workingDirectory: process.env.WORKING_DIRECTORY ||  path.resolve(__dirname + '/../../tests'),
     contextName: process.env.GIT_PROVIDER_NAME,
     provider: process.env.GIT_PROVIDER || providers.GITHUB,
+    revision: process.env.REVISION,
 };
