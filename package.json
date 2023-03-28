@@ -1,6 +1,6 @@
 {
   "name": "github-enricher",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "private": true,
   "scripts": {
     "start": "node src/index.js",
@@ -10,7 +10,7 @@
     "node": "18.12.1"
   },
   "dependencies": {
-    "@codefresh-io/cf-report-image-toolbox": "^1.0.3",
+    "@codefresh-io/cf-report-image-toolbox": "^1.0.5",
     "bluebird": "^3.7.2",
     "chalk": "^4.1.0",
     "lodash": "^4.17.21"
