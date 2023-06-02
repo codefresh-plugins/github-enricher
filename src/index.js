@@ -10,7 +10,7 @@ const PLATFORM = {
     CLASSIC: 'CLASSIC'
 };
 
-async function getGitProvider(codefreshAPI, gitContext) {
+async function getGitCredentials(codefreshAPI, gitContext) {
     try {
         if(!gitContext){
             return null
@@ -43,7 +43,7 @@ async function execute() {
     }
 
     const codefreshAPI = new CodefreshAPI(config.host, config.apiToken);
-    const context = await getGitProvider(codefreshAPI, config.contextName);
+    const context = await getGitCredentials(codefreshAPI, config.contextName);
     const provider = _.get(context, 'provider') || config.provider;
     const inputs = {
         platform: PLATFORM.CLASSIC,
