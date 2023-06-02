@@ -15,4 +15,8 @@ module.exports = {
     contextName: process.env.GIT_PROVIDER_NAME,
     provider: process.env.GIT_PROVIDER || providers.GITHUB,
     revision: process.env.REVISION,
+    gerritChangeId: process.env.GERRIT_CHANGE_ID,
+    gerritHost: process.env.GERRIT_HOST_URL,
+    gerritUsername: process.env.GERRIT_USERNAME,
+    gerritPassword: process.env.GERRIT_PASSWORD,
 };
