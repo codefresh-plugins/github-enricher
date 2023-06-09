@@ -11,6 +11,7 @@ module.exports = {
     branch: process.env.BRANCH,
     repo: process.env.REPO,
     githubToken: process.env.GITHUB_TOKEN,
+    githubApiPathPrefix: process.env.GITHUB_API_PATH_PREFIX,
     workingDirectory: process.env.WORKING_DIRECTORY ||  path.resolve(__dirname + '/../../tests'),
     contextName: process.env.GIT_PROVIDER_NAME,
     provider: process.env.GIT_PROVIDER || providers.GITHUB,
