@@ -2,8 +2,7 @@ const providers = {
   GITHUB: 'github',
   BITBUCKET: 'bitbucket',
   BITBUCKET_SERVER: 'bitbucket-server',
-  GITLAB: 'gitlab',
-  GERRIT: 'gerrit',
+  GITLAB: 'gitlab'
 }
 
 module.exports = {
