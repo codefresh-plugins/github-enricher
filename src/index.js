@@ -35,6 +35,16 @@ async function getGitCredentials(codefreshAPI, gitContext) {
                 githubApiHost: _.get(context, 'spec.data.auth.apiHost', 'api.github.com'),
             }
         }
+        if (contextType===`${GIT_CONTEXT_TYPE_PREFIX}${providers.GITHUB_APP}`) {
+            return {
+                provider: providers.GITHUB_APP,
+                githubAppId: _.get(context,'spec.data.auth.appId'),
+                githubAppInstallationId: _.get(context,'spec.data.auth.installationId'),
+                githubAppPrivateKey: _.get(context,'spec.data.auth.privateKey'),
+                githubApiPathPrefix: _.get(context, 'spec.data.auth.apiPathPrefix', '/'),
+                githubApiHost: _.get(context, 'spec.data.auth.apiHost', 'api.github.com'),
+            }
+        }
         return null
     } catch (error) {
         console.error(`Can't get git context. Error: ${error.message}`)
@@ -78,6 +88,13 @@ async function execute() {
         inputs.githubApiHost = _.get(context, 'githubApiHost') || config.githubHost;
         inputs.githubApiPathPrefix = _.get(context, 'githubApiPathPrefix') || config.githubApiPathPrefix;
         inputs.githubToken = _.get(context, 'githubToken') || config.githubToken;
+    }
+    if (provider === providers.GITHUB_APP) {
+        inputs.githubApiHost = _.get(context, 'githubApiHost') || config.githubHost;
+        inputs.githubApiPathPrefix = _.get(context, 'githubApiPathPrefix') || config.githubApiPathPrefix;
+        inputs.githubAppId = _.get(context, 'githubAppId') || config.githubAppId;
+        inputs.githubAppInstallationId = _.get(context,'githubAppInstallationId') || config.githubAppInstallationId;
+        inputs.githubAppPrivateKey = _.get(context,'githubAppPrivateKey') || config.githubAppPrivateKey;
     }
 
     await imageEnricherGitInfo(inputs);
