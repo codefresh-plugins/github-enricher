@@ -45,6 +45,14 @@ async function getGitCredentials(codefreshAPI, gitContext) {
                 githubApiHost: _.get(context, 'spec.data.auth.apiHost', 'api.github.com'),
             }
         }
+        if (contextType===`${GIT_CONTEXT_TYPE_PREFIX}${providers.CODEFRESH_GITHUB_APP}`) {
+            return {
+                provider: providers.GITHUB_APP,
+                githubAppInstallationId: _.get(context,'spec.data.auth.installationId'),
+                githubApiPathPrefix: _.get(context, 'spec.data.auth.apiPathPrefix', '/'),
+                githubApiHost: _.get(context, 'spec.data.auth.apiHost', 'api.github.com'),
+            }
+        }
         return null
     } catch (error) {
         console.error(`Can't get git context. Error: ${error.message}`)
