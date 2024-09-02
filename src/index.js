@@ -5,6 +5,7 @@ const config = require('./configuration');
 const pullRequest = require('./pull-request');
 const { providers } = require('./configuration/types');
 const CodefreshAPI = require('./codefresh.api');
+const { UnsupportedContextError } = require('./errors')
 
 const PLATFORM = {
     CLASSIC: 'CLASSIC'
@@ -46,15 +47,13 @@ async function getGitCredentials(codefreshAPI, gitContext) {
             }
         }
         if (contextType===`${GIT_CONTEXT_TYPE_PREFIX}${providers.CODEFRESH_GITHUB_APP}`) {
-            return {
-                provider: providers.GITHUB_APP,
-                githubAppInstallationId: _.get(context,'spec.data.auth.installationId'),
-                githubApiPathPrefix: _.get(context, 'spec.data.auth.apiPathPrefix', '/'),
-                githubApiHost: _.get(context, 'spec.data.auth.apiHost', 'api.github.com'),
-            }
+            throw new UnsupportedContextError('Codefresh Github Application is not supported. Use Github Application instead.');
         }
         return null
     } catch (error) {
+        if (error instanceof UnsupportedContextError) {
+            throw error;
+        }
         console.error(`Can't get git context. Error: ${error.message}`)
     }
     return null
